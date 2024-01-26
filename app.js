@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const PORT = 5000 || process.env.PORT;
 const expressLayout = require('express-ejs-layouts');
+const db = require('./database/db.js');
+db();
 
 app.use(express.static('public'));
 
