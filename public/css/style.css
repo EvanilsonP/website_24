@@ -298,6 +298,7 @@ img {
 
 /* SeachBar */
 .searchBar {
+  visibility: hidden;
   background-color: var(--black);
   padding: 4px 0;
   position: absolute;
@@ -317,12 +318,17 @@ img {
 }
 
 #searchClose {
+  cursor: pointer;
   position: absolute;
   top: 0;
   right: 0;
   color: var(--gray-light);
   padding: 15px;
 }
+
+#searchClose:hover {
+  background-color: red;
+};
 
 
 .pagination {
