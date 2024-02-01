@@ -9,6 +9,10 @@ db();
 
 app.use(express.static('public'));
 
+// In order to pass some data in the search button we use this middleware / Be able to pass data thru forms
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Templating engine
 app.use(expressLayout);
 app.set('layout', './layouts/main');
