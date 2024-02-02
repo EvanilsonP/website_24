@@ -20,5 +20,6 @@ app.set('view engine', 'ejs');
 
 // Home page / Grabbing the router from main js file in server/routes/main.js
 app.use('/', require('./server/routes/main'));
+app.use('/', require('./server/routes/admin'));
 
 app.listen(PORT, () => console.log(`Up and running on PORT ${PORT}`));
