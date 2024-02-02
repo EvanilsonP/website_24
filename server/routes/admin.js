@@ -7,6 +7,24 @@ const jwt = require('jsonwebtoken');
 
 
 const adminLayout = '../views/layouts/admin';
+const jwtSecret = process.env.JWT_SECRET;
+
+// Check Login
+const authMiddleware = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if(!token) return res.status(401).json( { message: 'Unauthorized'} );
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    req.userId = decoded.userId;
+    next();
+  } 
+  
+  catch (error) {
+    res.status(401).json( { message: 'Unauthorized'} );
+  }
+};
 
 // GET / Admin login page
 router.get('/admin', async (req, res) => {
@@ -42,6 +60,11 @@ router.post('/admin', async (req, res) => {
       return res.status(401).json( { message: 'Invalid password' } );
     }
 
+    // Saving token to the cookie
+  const token = jwt.sign({ userId: user._id}, jwtSecret);
+  res.cookie('token', token, { httpOnly: true });
+  res.redirect('/dashboard');
+
   } catch (error) {
     console.log(error);
   }
@@ -69,6 +92,8 @@ router.post('/register', async (req, res) => {
 });
 
 
-
+router.get('/dashboard', authMiddleware, (req, res) => {
+  res.render('admin/dashboard');
+});
 
 module.exports = router;
