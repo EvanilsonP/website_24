@@ -223,5 +223,19 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// PUT - ADMIN CREATE NEW POST
+router.put('/edit-post/:id', authMiddleware, async(req, res) => {
+  try {
+    await Post.findByIdAndUpdate(req.params.id, {
+      title: req.body.title,
+      body: req.body.body,
+      updatedAt: Date.now()
+    });
+    res.redirect(`/edit-post/${req.params.id}`);
+  } 
+  catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
